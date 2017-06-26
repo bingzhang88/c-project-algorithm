@@ -770,9 +770,9 @@ bool match(char* str, char* pattern)
     else return true;
 }
 
-ListNode* deleteDuplication(ListNode* head)
+ListNode* deleteDuplication(ListNode* pHead)
 {
-    if (!head || !head->next) return head;
+    /*if (!head || !head->next) return head;
     ListNode* dummy = new ListNode(-1);dummy->next = head;
     ListNode*pre = dummy, *p1 = head;
     bool flag = 0;
@@ -788,7 +788,38 @@ ListNode* deleteDuplication(ListNode* head)
         }
     }
     return dummy->next;
+	*/
+	if(!pHead || !pHead->next)
+            return pHead;
+        ListNode* head=pHead;
+        ListNode* newHead=new ListNode(0);
+        newHead->next=head;
+        ListNode* temp1=newHead;
+        while(head && head->next){
+            if(head->val!=head->next->val){
+            	temp1=head;
+                head=head->next;
+            }
+            else{
+                ListNode* temp2=head;
+				while(temp2->next && temp2->val==temp2->next->val){
+                    temp2=temp2->next;
+                }
+                temp1->next=temp2->next;
+                head=temp2->next;
+            }
+        }
+        return newHead->next;
+
 }
+
+bool isSymmetrical(TreeNode* pRoot)
+    {
+    	if(pRoot && pRoot->left==NULL && pRoot->right==NULL)return true;
+		else if(pRoot->left&&pRoot->right && pRoot->left->val==pRoot->right->val) return (isSymmetrical(pRoot->left) && isSymmetrical(pRoot->right));
+        else return false;
+        
+    }
 int main()
 {
 	/*TreeNode * tree=new TreeNode(62);
@@ -960,7 +991,7 @@ int main()
 	//char a[]={'\0'};
 	//char b[]={'.','*','\0'};
 	//bool res=match(a,b);
-	ListNode *list1=new ListNode(1);
+	/*ListNode *list1=new ListNode(1);
 	ListNode *head=list1;
 	int num;
 	while(cin>>num){
@@ -969,5 +1000,24 @@ int main()
 	}
 	list1->next=NULL;
 	ListNode*res=deleteDuplication(head->next);
+	*/
+	TreeNode * tree=new TreeNode(1);
+	tree->left=new TreeNode(2);
+	tree->right=new TreeNode(2);
+	tree->left->left=new TreeNode(3);
+	//tree->left->left->left=NULL;
+	tree->left->left->right=new TreeNode(37);
+	tree->left->right=new TreeNode(3);
+	//tree->left->right->left=NULL;
+	tree->left->right->right=new TreeNode(58);
+
+	tree->right->left=new TreeNode(4);
+	//tree->right->left->left=NULL;
+	//tree->right->left->right=NULL;
+	tree->right->right=new TreeNode(4);
+	tree->right->right->left=new TreeNode(93);
+	//tree->right->right->right=NULL;
+	
+	bool res=isSymmetrical(tree);
 	return 0;
 }
