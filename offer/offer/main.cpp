@@ -814,12 +814,223 @@ ListNode* deleteDuplication(ListNode* pHead)
 }
 
 bool isSymmetrical(TreeNode* pRoot)
-    {
-    	if(pRoot && pRoot->left==NULL && pRoot->right==NULL)return true;
-		else if(pRoot->left&&pRoot->right && pRoot->left->val==pRoot->right->val) return (isSymmetrical(pRoot->left) && isSymmetrical(pRoot->right));
-        else return false;
+{
+    if(pRoot && pRoot->left==NULL && pRoot->right==NULL)return true;
+	else if(pRoot->left&&pRoot->right && pRoot->left->val==pRoot->right->val) return (isSymmetrical(pRoot->left) && isSymmetrical(pRoot->right));
+    else return false;
         
+}
+void combine(void)
+{
+	int m,n;
+	while(cin>>m>>n){
+		//cin>>m>>n;
+		vector<int>vec1;
+		int temp;
+		for(int i=0;i<m+n;i++)
+		{
+			cin>>temp;
+			if(i>=m)
+			{
+				vector<int>::iterator it=find(vec1.begin(),vec1.end(),temp);
+				if(it<vec1.end())
+					continue;
+				
+				
+			}
+			vec1.push_back(temp);
+		}
+		sort(vec1.begin(),vec1.end());
+		for(vector<int>::iterator it=vec1.begin();it<vec1.end();it++)
+		{
+			cout<<*it<<" ";
+		}
+		cout<<endl;
+	}
+	return;
+}
+void min_max_diff(void){
+	int N;
+      
+    int num;
+    while(cin>>N)
+    {
+        vector<int>vec;
+        vector<int>vec_num0;
+        for(int i=0;i<N;i++)
+        {
+            cin>>num;
+            vec.push_back(num);
+        }
+        sort(vec.begin(),vec.end());
+        vector<vector<int> >total;
+        vector<int> row;
+        int min_temp=vec[1]-vec[0];
+        row.push_back(min_temp);
+        int flag=(min_temp==0)?1:0;
+		int max_begin=1;
+		int max_end=1;
+        if(vec[0]==vec[N-1]){
+            cout<<N*(N-1)/2<<" "<<N*(N-1)/2<<endl;
+            continue;
+        }
+        for(int i=1;i<N;i++)
+        {
+            if(vec[i]==vec[i-1])
+                max_begin++;
+            else
+                break;
+        }
+        for(int i=N-1;i>0;i--)
+        {
+            if(vec[i]==vec[i-1])
+                max_end++;
+            else
+                break;
+        }
+        for(int i=2;i<N;i++){
+            if(flag==0){
+                if((vec[i]-vec[i-1])<min_temp){
+                    min_temp=vec[i]-vec[i-1];
+                    row.clear();
+                    row.push_back(min_temp);
+                    if(min_temp==0) flag=1;
+                }
+				else if((vec[i]-vec[i-1])==min_temp){
+					row.push_back(min_temp);
+				}
+            }
+            else{
+                if((vec[i]-vec[i-1])!=0&&row.size()>0){
+                    total.push_back(row);
+                    row.clear();
+                }
+                else if((vec[i]-vec[i-1])==0){
+                    row.push_back(0);
+                }
+            }
+        }
+		if(row.size()>0) total.push_back(row);
+		if(flag==0)
+			cout<<row.size()<<" "<<max_begin*max_end<<endl;
+		else
+		{
+			int total_min=0;
+			for(int i=0;i<total.size();i++)
+			{
+				int temp=total[i].size();
+				total_min+=temp*(temp+1)/2;
+			}
+			cout<<total_min<<" "<<max_begin*max_end<<endl;
+		}
+        //cout<<min_num<<" "<<max_begin*max_end<<endl;
     }
+	return;
+}
+void shaota(void)
+{
+	bool flag[10][10];
+	int n;
+	while(cin>>n)
+	{
+		vector<int>h;
+		int height;
+		for(int i=0;i<n;i++)
+		{
+			cin>>height;
+			h.push_back(height);
+		}
+		int count=0;
+		for(int i=0;i<n;i++)
+		{
+			int mid=0;
+			for(int j=i+1;j<i+n-1;j++)
+			{
+				if(h[i]>=mid && mid<=h[j%n])
+				{
+					if(flag[i][j%n] && flag[j%n][i])
+						count++;
+					mid=h[j%n];
+					flag[i][j%n]=false;
+				}
+				else
+					break;
+			}
+		}
+		cout<<count<<endl;
+	}
+}
+int get_sum(int n,int jinzhi){
+    int ans=0;
+    while(n>0){
+        ans+=(n%jinzhi);
+        n/=jinzhi;
+    }
+    return ans;
+}
+void get_total(int a){
+    if(a<=2){
+        cout<<1<<'/'<<1<<endl;
+    	return;
+    }
+    int ans=0;
+    int num=a-2;
+    int temp=a-1;
+    while(temp>=2){
+        ans+=get_sum(a,temp);
+        temp--;
+    }
+    int z = ans;
+    int x=a-2;
+    int y=ans;
+    while(x%y!=0)  
+    {  
+        z = x%y;  
+        x = y;  
+        y = z;    
+    } 
+    cout<<ans/z<<'/'<<(a-2)/z<<endl;
+    return;
+}
+void insert_sort(vector<int> &arr,int n){
+    if(n<arr[0])
+        arr.insert(arr.begin(),n);
+    else if(n>arr[arr.size()-1])
+        arr.push_back(n);
+    else{
+        for(int i=0;i<arr.size()-1;i++){
+            if(n>arr[i] && n < arr[i+1]){
+                arr.insert(arr.begin()+i+1,n);
+                break;
+            }
+            else if(n==arr[i] || n==arr[i+1])
+                break;
+        }
+    }
+    return;
+}
+void get_num(){
+    int n,m;
+    while(cin>>n>>m){
+        int temp;
+        vector<int>arr;
+        for(int i=0;i<n;i++){
+            cin>>temp;
+            if(i==0) arr.push_back(temp);
+            else insert_sort(arr,temp);
+        }
+        for(int i=0;i<m;i++){
+            cin>>temp;
+            insert_sort(arr,temp);
+        }
+        sort(arr.begin(),arr.end());
+        for(int i=0;i<arr.size()-1;i++){
+            cout<<arr[i]<<' ';
+        }
+        cout<<arr[arr.size()-1]<<endl;
+    }
+    return;
+}
 int main()
 {
 	/*TreeNode * tree=new TreeNode(62);
@@ -1001,7 +1212,7 @@ int main()
 	list1->next=NULL;
 	ListNode*res=deleteDuplication(head->next);
 	*/
-	TreeNode * tree=new TreeNode(1);
+	/*TreeNode * tree=new TreeNode(1);
 	tree->left=new TreeNode(2);
 	tree->right=new TreeNode(2);
 	tree->left->left=new TreeNode(3);
@@ -1017,7 +1228,46 @@ int main()
 	tree->right->right=new TreeNode(4);
 	tree->right->right->left=new TreeNode(93);
 	//tree->right->right->right=NULL;
-	
 	bool res=isSymmetrical(tree);
-	return 0;
+	*/
+	//combine();
+	//min_max_diff();
+	/*
+	int n;
+	cin>>n;
+    bool *flag=new bool[n*n];
+    for(int i=0;i<n*n;i++){
+        flag[i]=true;
+    }
+    vector<int>h;
+    int height;
+    for(int i=0;i<n;i++)
+    {
+        cin>>height;
+        h.push_back(height);
+    }
+    int count=0;
+    for(int i=0;i<n;i++)
+    {
+        int mid=0;
+        for(int j=i+1;j<i+n-1;j++)
+        {
+            if(h[i]>=mid && mid<=h[j%n])
+            {
+                if(flag[i*n+j%n] && flag[(j%n)*n+i])
+                {
+                    count++;
+                }
+
+                mid=h[j%n];
+                flag[i*n+j%n]=false;
+            }
+        }
+    }
+    cout<<count<<endl;
+    delete(flag);
+    flag=NULL;*/
+	//get_total(10);
+	get_num();
+    return 0;
 }

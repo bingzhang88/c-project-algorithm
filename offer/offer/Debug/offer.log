@@ -1,4 +1,4 @@
-﻿生成启动时间为 2017/6/26 14:07:46。
+﻿生成启动时间为 2017/7/11 21:26:34。
      1>项目“F:\C++test\git\c-project-algorithm\offer\offer\offer.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\offer.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
@@ -12,6 +12,9 @@
      1>f:\c++test\git\c-project-algorithm\offer\offer\main.cpp(638): warning C4018: “<”: 有符号/无符号不匹配
      1>f:\c++test\git\c-project-algorithm\offer\offer\main.cpp(708): warning C4018: “>=”: 有符号/无符号不匹配
      1>f:\c++test\git\c-project-algorithm\offer\offer\main.cpp(725): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\c++test\git\c-project-algorithm\offer\offer\main.cpp(919): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\c++test\git\c-project-algorithm\offer\offer\main.cpp(1001): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\c++test\git\c-project-algorithm\offer\offer\main.cpp(1027): warning C4018: “<”: 有符号/无符号不匹配
        ManifestResourceCompile:
          所有输出均为最新。
        Link:
@@ -30,4 +33,4 @@
 
 生成成功。
 
-已用时间 00:00:01.24
+已用时间 00:00:01.57
