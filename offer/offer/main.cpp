@@ -28,6 +28,7 @@ struct RandomListNode {
             label(x), next(NULL), random(NULL) {
     }
 };
+
 class solution{
 
 	public:
@@ -493,7 +494,6 @@ class solution{
 		else
 			return false;
 	}
-
 
 };
 int run(TreeNode *root) {
@@ -1031,6 +1031,151 @@ void get_num(){
     }
     return;
 }
+
+int get_max(vector<int>&arr,int left,int right){
+    int max=arr[left-1];
+    if(left==right)return max;
+    for(int i=left;i<right;i++){
+        if(arr[i]>max) max=arr[i];
+    }
+    return max;
+}
+void process(void){
+    int n,m;
+    while(cin>>n>>m){
+        vector<int>grade;
+        int grade1;
+        for(int i=0;i<n;i++){
+            cin>>grade1;
+            grade.push_back(grade1);
+        }
+        char a;
+        int num1,num2;
+        for(int i=0;i<m;i++){
+            cin>>a;
+            cin>>num1>>num2;
+            if(a=='Q'){
+                cout<<get_max(grade,num1,num2);
+            }
+            else{
+                grade[num1-1]=num2;
+            }
+        }
+        
+    }
+    return;
+}
+
+void file_record(void){
+	string full_name,line;
+	vector<string>str,lines;
+	int a[8]={0};
+	ifstream fin;
+	vector<int>num;
+	fin.open("F:\\C++test\\git\\c-project-algorithm\\offer\\data1.txt");
+	while(fin>>full_name>>line)
+	{
+		int index=0;
+		for(int i=0;i<full_name.size();i++)
+		{
+			if(full_name[i]=='\\') index=i;
+		}
+		string name(full_name.begin()+index+1,full_name.end());
+		if(str.size()==0)
+		{
+			str.push_back(name);
+			lines.push_back(line);
+			num.push_back(1);
+		}
+		else
+		{
+			for(int i=0;i<str.size();i++)
+			{
+				if(str[i]==name && lines[i]==line)
+				{
+					num[i]++;
+					break;
+				}
+			}
+			str.push_back(name);
+			lines.push_back(line);
+			num.push_back(1);
+		}
+	}
+	for(int ii=0;ii<(str.size()<8?str.size():8);ii++)
+	{
+        int max=num[0];
+        int index=0;
+        for(int i=0;i<str.size();i++){
+            if(max<num[i]){
+                max=num[i];
+                index=i;
+            }
+        }
+        
+        string s;
+        if(str[index].size()>16)
+        {
+            s.append(str[index].end()-16,str[index].end());
+        }
+        else
+            s=str[index];
+        cout<<s<<" "<<lines[index]<<" "<<num[index]<<" ";
+		num[index]=0;
+	}
+	fin.close();
+	return;
+}
+
+vector<int> store_poker(string &s)
+{
+	vector<int> res;
+	for(int i=0;i<s.size();i++)
+	{
+		if(s[i]=='1')
+		{
+			res.push_back(10);
+			i++;
+		}
+		else if(s[i]=='J') res.push_back(11);
+		else if(s[i]=='Q') res.push_back(12);
+		else if(s[i]=='K') res.push_back(13);
+		else if(s[i]=='A') res.push_back(14);
+		else if(s[i]=='2') res.push_back(15);
+		else if(s[i]==' ') continue;
+		else res.push_back(s[i]-'0');
+	}
+	return res;
+}
+
+void poker_comp(string &s)
+{
+	int index=s.find('-');
+	string s1(s.begin(),s.begin()+index);
+	string s2(s.begin()+index+1,s.end());
+	if(s1=="joker JOKER" || s2=="joker JOKER")
+	{
+		cout<<"joker JOKER"<<endl;
+		return;
+	}
+	vector<int> v1=store_poker(s1);
+	vector<int> v2=store_poker(s2);
+
+	if(v1.size()==4 && v2.size()==4)
+	{
+		if(v1[0]<v2[0])cout<<s2<<endl;
+		else cout<<s1<<endl;
+		return;
+	}
+	if(v1.size()==4) cout<<s1<<endl;
+	else if(v2.size()==4)cout<<s2<<endl;
+	else if(v1.size()!=v2.size()) cout<<"ERROR"<<endl;
+	else if(v1[0]<v2[0]) cout<<s2<<endl;
+	else if(v1[0]>v2[0]) cout<<s1<<endl;
+	else cout<<"ERROR"<<endl;
+	return;
+}
+
 int main()
 {
 	/*TreeNode * tree=new TreeNode(62);
@@ -1268,6 +1413,10 @@ int main()
     delete(flag);
     flag=NULL;*/
 	//get_total(10);
-	get_num();
-    return 0;
+	//get_num();
+	//process();
+	//file_record();
+	//string s="4 4 4 4-5 5 5 5";
+	//poker_comp(s);
+	return 0;
 }
