@@ -1176,6 +1176,126 @@ void poker_comp(string &s)
 	return;
 }
 
+void fine_point(void){
+    int len;
+    cin>>len;
+    int res=0;
+    for(int x=0;x<=int(sqrt(len/2.0));x++){
+        int y = sqrt((len - x * x)*1.0);
+        if((x*x+y*y)==len){
+            if(x==0 || y==0 || x == y){
+                res+=4;
+            }
+            else
+                res+=8;
+        }
+    }
+    cout<< res;
+}
+
+vector<int> yueshu(int a)
+{
+	vector<int>res;
+	for(int i=2;i<=sqrt(a*1.0);i++)
+	{
+		if(a%i==0)
+		{	
+			res.push_back(i);
+		
+			if(a/i!=i)
+				res.push_back(a/i);
+		}
+	}
+	return res;
+}
+void helper(int n,int m)
+{
+	vector<int>dp(m+1,0);
+	dp[n]=1;
+	for(int i=n;i<=m;i++)
+	{
+		if(dp[i]==0)continue;
+		vector<int>ys=yueshu(i);
+		for(int j=0;j<ys.size();j++)
+		{
+			if((i+ys[j])<=m)
+			{
+				if(dp[i+ys[j]]==0)
+					dp[i+ys[j]]=dp[i]+1;
+				else
+					dp[i+ys[j]]=(dp[i]+1)<dp[i+ys[j]]?(dp[i]+1):dp[i+ys[j]];
+			}
+		}
+	}
+	if(dp[m]==0)
+		cout<<-1<<endl;
+	else
+		cout<<dp[m]-1<<endl;
+}
+
+void jingdong5(void)
+{
+	long double a,b;
+	while(cin>>a>>b)
+	{
+		string s1=to_string(a);
+        string s2=to_string(b);
+        reverse(s1.begin(),s1.end());
+        reverse(s2.begin(),s2.end());
+		long long a1=atoi(s1.c_str());
+		long long b1=atoi(s2.c_str());
+        string res=to_string(a1+b1);
+        reverse(res.begin(),res.end());
+        cout<<res<<endl;
+	}
+}
+
+unsigned long long jingdong6(unsigned long long n)
+{
+	unsigned long long res=0;
+	if(n==2) return 2;
+	if(n==1) return 1;
+	if(int(n)%2!=0)
+	{
+		unsigned long long index=(n+1)/2;
+		res=(index*index);
+		n--;
+	}
+	else
+	{
+		unsigned long long index=n/2;
+		res=(index*index);
+	}
+	res+=jingdong6(n/2);
+	return res;
+}
+void wangyi7(void)
+{
+	int num;
+	cin>>num;
+	int min_count=num/6+1;
+	for(int i=0;i<=num/6;i++)
+	{
+		if((num-6*i)%8==0)
+		{
+			if((num-6*i)/8+i<min_count)
+				min_count=(num-6*i)/8+i;
+		}
+	}
+	if(min_count==num/6+1)
+		cout<<-1<<endl;
+	else
+		cout<<min_count<<endl;
+}
+void wangyi8(void)
+{
+	int s1,s2,s3,s4;
+	cin>>s1>>s2>>s3>>s4;
+	if((s1+s3)<0 || (s1+s3)%2!=0 || (s2+s4)<0 || (s2+s4)%2!=0 || s4<s2 || (s4-s2)%2!=0)
+		cout<<"No"<<endl;
+	else
+		cout<<(s1+s3)/2<<" "<<(s2+s4)/2<<" "<<(s4-s2)/2<<endl;
+}
 int main()
 {
 	/*TreeNode * tree=new TreeNode(62);
@@ -1418,5 +1538,9 @@ int main()
 	//file_record();
 	//string s="4 4 4 4-5 5 5 5";
 	//poker_comp(s);
+	//fine_point();
+	//helper(4,24);
+	//cout<<long long (jingdong6(1000000000))<<endl;
+	wangyi7();
 	return 0;
 }
