@@ -1296,6 +1296,65 @@ void wangyi8(void)
 	else
 		cout<<(s1+s3)/2<<" "<<(s2+s4)/2<<" "<<(s4-s2)/2<<endl;
 }
+void backpack_0_1(void)
+{
+	int num;
+	vector<int> val;
+	vector<int> weight;
+	int temp;
+	cin>>num;
+	val.push_back(0);//保证下标从1开始
+	weight.push_back(0);
+	for(int i=1;i<=num;i++)
+	{
+		cin>>temp;//输入物品价值
+		val.push_back(temp);
+	}
+	for(int i=1;i<=num;i++)
+	{
+		cin>>temp;//输入物品重量
+		weight.push_back(temp);
+	}
+	//int **dp=new int[num+1][11];
+	vector<vector <int> > dp(num+1 ,vector<int>(11));  //有 i 个物品，放在容量为 j 的背包 能获得的最大价值，下标都从1开始
+	for(int i=1;i<=num;i++)
+	{
+		for(int j=10;j>=1;j--)
+		{
+			if(j<weight[i])
+			{	
+				dp[i][j]=dp[i-1][j];//当前物品重量超过背包容量，则价值为前i-1个物品获得的价值
+			}
+			else
+				dp[i][j]=dp[i-1][j]>(dp[i-1][j-weight[i]]+val[i])?dp[i-1][j]:(dp[i-1][j-weight[i]]+val[i]);
+		}
+	}
+	return;
+}
+void cpu_min_time(void)
+{
+	int num;
+	cin>>num;
+	vector<int> time;
+	int temp;
+	int sum=0;
+	for(int i=0;i<num;i++)
+	{
+		cin>>temp;
+		time.push_back(temp);
+		sum+=temp;
+	}
+	sum/=2;
+	vector<int> dp(sum+1,0);
+	for(int i=0;i<num;i++)
+	{
+		for(int j=sum;j>=time[i];j--)
+		{
+			dp[j]=dp[j]>dp[j-time[i]]+time[i]?dp[j]:dp[j-time[i]]+time[i];
+		}
+	}
+	return;
+}
 int main()
 {
 	/*TreeNode * tree=new TreeNode(62);
@@ -1541,6 +1600,8 @@ int main()
 	//fine_point();
 	//helper(4,24);
 	//cout<<long long (jingdong6(1000000000))<<endl;
-	wangyi7();
+	//wangyi7();
+	//backpack_0_1();
+	cpu_min_time();
 	return 0;
 }
