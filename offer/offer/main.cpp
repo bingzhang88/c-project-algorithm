@@ -1355,6 +1355,86 @@ void cpu_min_time(void)
 	}
 	return;
 }
+class A {
+public:
+    int b;
+    char c;
+    virtual void print() {
+        cout << "this is father’s fuction! " << endl;
+    }
+};
+class B: A {
+public:
+    virtual void print() {
+        cout << "this is children’s fuction! " << endl;
+    }
+};
+class myClass{
+public:
+	void foo();
+};
+void myClass::foo(){
+    delete this;
+}
+void func(){
+    myClass *a = new myClass();
+    a->foo();
+}
+void fast_sort(vector<int> &a,int left,int right)
+{
+	if(left>=right) return;
+	int temp=a[left];
+	int i=left;
+	int j=right;
+	while(i<j)
+	{
+		while(a[j]>=temp && i<j)
+			j--;
+		while(a[i]<=temp && i<j)
+			i++;
+		if(i<j){
+			int temp1=a[i];
+			a[i]=a[j];
+			a[j]=temp1;
+		}
+	}
+	a[left]=a[i];
+	a[i]=temp;
+	fast_sort(a,left,i-1);
+	fast_sort(a,i+1,right);
+}
+void quicksort(int a[],int left,int right) 
+{ 
+    int i,j,t,temp; 
+    if(left>right) 
+       return; 
+                                
+    temp=a[left]; //temp中存的就是基准数 
+    i=left; 
+    j=right; 
+    while(i!=j) 
+    { 
+                   //顺序很重要，要先从右边开始找 
+                   while(a[j]>=temp && i<j) 
+                            j--; 
+                   //再找右边的 
+                   while(a[i]<=temp && i<j) 
+                            i++; 
+                   //交换两个数在数组中的位置 
+                   if(i<j) 
+                   { 
+                            t=a[i]; 
+                            a[i]=a[j]; 
+                            a[j]=t; 
+                   } 
+    } 
+    //最终将基准数归位 
+    a[left]=a[i]; 
+    a[i]=temp; 
+                             
+    quicksort(a,left,i-1);//继续处理左边的，这里是一个递归的过程 
+    quicksort(a,i+1,right);//继续处理右边的 ，这里是一个递归的过程 
+} 
 int main()
 {
 	/*TreeNode * tree=new TreeNode(62);
@@ -1602,6 +1682,13 @@ int main()
 	//cout<<long long (jingdong6(1000000000))<<endl;
 	//wangyi7();
 	//backpack_0_1();
-	cpu_min_time();
-	return 0;
+	//cpu_min_time();
+	//cout << sizeof(A) << "" << sizeof(B) << endl;
+	//myClass s;
+	//s.foo();
+	int a[]={4,6,8,1,3,7,9,2,0};
+	vector<int> arr(a,a+9);
+	fast_sort(arr,0,8);
+	//quicksort(a,0,8);
+    return 0;	
 }
